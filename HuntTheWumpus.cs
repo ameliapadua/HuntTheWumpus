@@ -14,6 +14,11 @@ namespace HuntTheWumpus
 
 		public static void PlayHuntTheWumpus()
 		{
+			//Creating a random cave to start at
+			//Player starts from any cave from 1 - 5 (outermost caves)
+			Random r = new Random();
+			int startCave = r.Next(1,6);
+				
 			//Creating a player and a wumpus.
 			Player player1 = new Player();
 			Wumpus wumpus = new Wumpus();
@@ -26,7 +31,7 @@ namespace HuntTheWumpus
 			Cave cave5 = new Cave(5);
 
 			//Player initially starts in cave 1.
-			EnterCave(player1, 1);
+			EnterCave(player1, startCave);
 
 			//Player is prompted for a next action.
 			ChooseNextAction(player1);
