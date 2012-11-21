@@ -5,17 +5,17 @@ namespace HuntTheWumpus
 	class Wumpus
 	{
 		public bool alive;
-		public int wumpusCaveNumber;
+		public int wumpusRoomNumber;
 
 		public Wumpus()
 		{
 			this.alive = true;
-			this.wumpusCaveNumber = 5;
+			this.wumpusRoomNumber = 5;
 		}
 
-		public int GetWumpusCaveNumber()
+		public int GetWumpusRoomNumber()
 		{
-			return wumpusCaveNumber;
+			return wumpusRoomNumber;
 		}
 
 		public bool IsWumpusAlive()
@@ -24,7 +24,7 @@ namespace HuntTheWumpus
 		}
 
 		//If the wumpus is shot, it dies.
-		public void ShotWithArrow()
+		public void ShotWithBullets()
 		{
 			this.alive = false;
 		}
