@@ -2,44 +2,44 @@ using System;
 
 namespace HuntTheWumpus
 {
-	class Cave
+	class Room
 	{
 		public bool containsWumpus;
 		public bool containsPlayer;
 		public string hint;
-		public int caveNumber;
+		public int roomNumber;
 
-		//Cave constructor. 
-		public Cave(int caveNumber)
+		//Room constructor. 
+		public Room(int roomNumber)
 		{
 			this.containsPlayer = false;
 			this.containsWumpus = false;
-			this.caveNumber = caveNumber;
+			this.roomNumber = roomNumber;
 		}
 
-		public int GetCaveNumber()
+		public int GetRoomNumber()
 		{
-			return caveNumber;
+			return roomNumber;
 		}
 
-		public bool IsWumpusInCave()
+		public bool IsWumpusInRoom()
 		{
 			return containsWumpus;
 		}
 
-		public bool IsPlayerInCave()
+		public bool IsPlayerInRoom()
 		{
 			return containsPlayer;
 		}
 
-		public void MoveIntoCave()
+		public void MoveIntoRoom()
 		{
 			this.containsWumpus = true;
 			this.containsPlayer = true;
 		}
 
 		//This will eventually be used once the map of
-		//the caves is developed and we know which cave
+		//the Rooms is developed and we know which Room
 		//contains which obstacles.
 		public void Hint(string hint)
 		{
