@@ -4,24 +4,38 @@ namespace HuntTheWumpus
 {
 	class Player
 	{
-		public int arrows;
-		public int playerCaveNumber;
+		public int bullets;
+		public int grenades;
+		public int flashbangs;
+		public int playerRoomNumber;
 		public bool alive;
 
 		public Player()
 		{
 			this.alive = true;
-			this.arrows = 3;
+			this.bullets = 3;
+			this.flashbangs = 2;
+			this.grenades = 1;
 		}
 
-		public int GetPlayerCaveNumber()
+		public int GetPlayerRoomNumber()
 		{
-			return playerCaveNumber;
+			return playerRoomNumber;
 		}
 
-		public int GetPlayerArrows()
+		public int GetPlayerBullets()
 		{
-			return arrows;
+			return bullets;
+		}
+
+		public int GetPlayerFlashbangs()
+		{
+			return flashbangs;
+		}
+
+		public int GetPlayerGrenades()
+		{
+			return grenades;
 		}
 
 		public bool IsPlayerAlive()
@@ -29,15 +43,39 @@ namespace HuntTheWumpus
 			return alive;
 		}
 
-		public void ShootArrow()
+		public void ShootBullets()
 		{
-			if (this.arrows == 0)
+			if (this.bullets == 0)
 			{
-				Console.WriteLine("You have no more arrows!");
+				Console.WriteLine("You have no more bullets!");
 			}
 			else
 			{
-				this.arrows--;
+				this.bullets--;
+			}
+		}
+
+		public void ThrowFlashbangs()
+		{
+			if (this.flashbangs == 0)
+			{
+				Console.WriteLine("You have no more flashbangs!");
+			}
+			else
+			{
+				this.flashbangs--;
+			}
+		}
+
+		public void ThrowGrenades()
+		{
+			if (this.grenades == 0)
+			{
+				Console.WriteLine("You have no more grenades!");
+			}
+			else
+			{
+				this.grenades--;
 			}
 		}
 
