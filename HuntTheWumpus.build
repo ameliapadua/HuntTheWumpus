@@ -26,7 +26,7 @@
         <include name="HuntTheWumpus.cs"/>
         <include name="Player.cs"/>
         <include name="Wumpus.cs"/>
-        <include name="Cave.cs"/>
+        <include name="Room.cs"/>
         <include name="../intro_cs_lib/**/*.cs"/>
       </sources>
       <references>
