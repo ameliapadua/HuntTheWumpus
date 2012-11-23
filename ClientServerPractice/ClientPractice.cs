@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.IO;
 
 namespace HuntTheWumpus.ClientServerPractice
 {
@@ -18,17 +19,28 @@ namespace HuntTheWumpus.ClientServerPractice
 
     	public void ClientConnect()
     	{
-
     		try 
     		{
             	TcpClient client = new TcpClient(ipString, portNum);
 
-            	NetworkStream ns = client.GetStream();
+            	NetworkStream networkStream = client.GetStream();
+            	StreamReader reader = new StreamReader(networkStream);
+            	StreamWriter writer = new StreamWriter(networkStream) { AutoFlush = true };
             
-            	byte[] bytes = new byte[1024];
-            	int bytesRead = ns.Read(bytes, 0, bytes.Length);
 
-            	Console.WriteLine(Encoding.ASCII.GetString(bytes,0,bytesRead));
+				Console.WriteLine(reader.ReadLine());
+
+				Console.WriteLine("Enter y/n: ");
+				string input = Console.ReadLine();
+				writer.WriteLine(input);
+				Console.WriteLine("Msg from server: {0}", reader.ReadLine());
+				Console.WriteLine(reader.ReadLine());
+
+				while (serverReader.Peek() > -1) 
+				{
+    serverReader.ReadLine();
+				}
+
 
             	client.Close();
 

@@ -2,6 +2,7 @@ using System;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.IO;
 
 namespace HuntTheWumpus.ClientServerPractice
 {
@@ -18,30 +19,43 @@ namespace HuntTheWumpus.ClientServerPractice
 
         public void ServerConnect()
         {
-            bool done = false;
             IPAddress ipAddress = IPAddress.Parse(ipString);
             
             TcpListener listener = new TcpListener(ipAddress, portNum);
 
             listener.Start();
 
-            while (!done) {
+            
                 Console.Write("Waiting for connection...");
                 TcpClient client = listener.AcceptTcpClient();
                 
                 Console.WriteLine("Connection accepted.");
-                NetworkStream ns = client.GetStream();
+                NetworkStream networkStream = client.GetStream();
+                StreamReader reader = new StreamReader(networkStream);
+                StreamWriter writer = new StreamWriter(networkStream) { AutoFlush = true };
 
-                byte[] byteTime = Encoding.ASCII.GetBytes(DateTime.Now.ToString());
 
-                try {
-                    ns.Write(byteTime, 0, byteTime.Length);
-                    ns.Close();
-                    client.Close();
-                } catch (Exception e) {
-                    Console.WriteLine(e.ToString());
-                }
-            }
+                    try 
+                    {
+                        string clientInput = reader.ReadLine();
+                        Console.WriteLine("Server reading from client: {0}", clientInput);
+                        if (clientInput == "y")
+                        {
+                            writer.WriteLine("This would continue play.");
+                        }
+                        else
+                        {
+                            writer.WriteLine("This would end play");
+                        }
+                        writer.WriteLine("Thank you, goodbye");
+                        writer.WriteLine("Test");
+                    } catch (Exception e) {
+                        Console.WriteLine(e.ToString());
+                    } 
+
+
+                networkStream.Close();
+                client.Close(); 
 
             listener.Stop();
         }  
