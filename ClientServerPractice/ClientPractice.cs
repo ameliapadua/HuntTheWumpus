@@ -36,12 +36,6 @@ namespace HuntTheWumpus.ClientServerPractice
 				Console.WriteLine("Msg from server: {0}", reader.ReadLine());
 				Console.WriteLine(reader.ReadLine());
 
-				while (serverReader.Peek() > -1) 
-				{
-    serverReader.ReadLine();
-				}
-
-
             	client.Close();
 
         	} catch (Exception e) 
