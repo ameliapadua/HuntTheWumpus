@@ -47,8 +47,9 @@ namespace HuntTheWumpus.ClientServerPractice
                         {
                             writer.WriteLine("This would end play");
                         }
-                        writer.WriteLine("Thank you, goodbye");
                         writer.WriteLine("Test");
+                        writer.WriteLine("Thank you, goodbye");
+                        
                     } catch (Exception e) {
                         Console.WriteLine(e.ToString());
                     } 

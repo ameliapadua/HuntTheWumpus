@@ -26,14 +26,12 @@ namespace HuntTheWumpus.ClientServerPractice
             	NetworkStream networkStream = client.GetStream();
             	StreamReader reader = new StreamReader(networkStream);
             	StreamWriter writer = new StreamWriter(networkStream) { AutoFlush = true };
-            
-
-				Console.WriteLine(reader.ReadLine());
 
 				Console.WriteLine("Enter y/n: ");
 				string input = Console.ReadLine();
 				writer.WriteLine(input);
 				Console.WriteLine("Msg from server: {0}", reader.ReadLine());
+				Console.WriteLine(reader.ReadLine());
 				Console.WriteLine(reader.ReadLine());
 
             	client.Close();
