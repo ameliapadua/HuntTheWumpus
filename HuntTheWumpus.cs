@@ -167,14 +167,28 @@ namespace HuntTheWumpus
 				if (playerChoice == "S")
 				{
 					player1.ShootBullets();
-					Console.WriteLine("You have {0} bullets.", player1.GetPlayerBullets());
+					Console.WriteLine("\nYou have {0} bullets.", player1.GetPlayerBullets());
 				}
 				//If player wants to move, they are prompted for which room and are moved there.
 				else if (playerChoice == "M")
 				{
-					Console.WriteLine("Which cave would you like to move to?");
-					int roomNumber = int.Parse(Console.ReadLine());
-					EnterRoom(player1, roomNumber, roomMap);
+					bool roomExists = false;
+					int[] adjacentRooms = roomMap[player1.playerRoomNumber];
+					while (!roomExists)
+					{
+						Console.WriteLine("Which room would you like to move to?");
+						int roomNumber = int.Parse(Console.ReadLine());
+
+						for (int i=0; i<3; i++)
+						{
+							if (roomNumber == adjacentRooms[i])
+							{
+								EnterRoom(player1, roomNumber, roomMap);
+								roomExists = true;
+							}
+						}
+					}
+					
 				}
 				//If player does not choose shoot or move, there is no action and they 
 				//will be prompted again.
