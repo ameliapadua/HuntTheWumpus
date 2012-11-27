@@ -21,19 +21,39 @@ namespace HuntTheWumpus.ClientServerPractice
     	{
     		try 
     		{
-            	TcpClient client = new TcpClient(ipString, portNum);
+    			bool done = false;
+    			string clientInput;
+    			string goodbyeMsg = "This would end play";
+    			string serverReadLine;
 
-            	NetworkStream networkStream = client.GetStream();
-            	StreamReader reader = new StreamReader(networkStream);
-            	StreamWriter writer = new StreamWriter(networkStream) { AutoFlush = true };
+    			TcpClient client = new TcpClient(ipString, portNum);
 
-				Console.WriteLine("Enter y/n: ");
-				string input = Console.ReadLine();
-				writer.WriteLine(input);
-				Console.WriteLine("Msg from server: {0}", reader.ReadLine());
-				Console.WriteLine(reader.ReadLine());
-				Console.WriteLine(reader.ReadLine());
+	            NetworkStream networkStream = client.GetStream();
+	            StreamReader reader = new StreamReader(networkStream);
+	            StreamWriter writer = new StreamWriter(networkStream) { AutoFlush = true };
 
+    			while (!done)
+    			{
+                    try
+                    {
+                        Console.WriteLine("Enter y/n: ");
+                        clientInput = Console.ReadLine();           
+                        writer.WriteLine(clientInput);
+
+                        serverReadLine = reader.ReadLine();
+                        Console.WriteLine("Msg from server: {0}", serverReadLine);
+                        
+                        if (serverReadLine == goodbyeMsg)
+                        {
+                            done = true;
+                        } 
+                    } catch (Exception exception)
+                    {
+                        Console.WriteLine(exception.ToString());
+                    }
+    				
+    			}
+   
             	client.Close();
 
         	} catch (Exception e) 

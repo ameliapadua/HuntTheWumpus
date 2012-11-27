@@ -26,33 +26,44 @@ namespace HuntTheWumpus.ClientServerPractice
             listener.Start();
 
             
-                Console.Write("Waiting for connection...");
-                TcpClient client = listener.AcceptTcpClient();
-                
-                Console.WriteLine("Connection accepted.");
-                NetworkStream networkStream = client.GetStream();
-                StreamReader reader = new StreamReader(networkStream);
-                StreamWriter writer = new StreamWriter(networkStream) { AutoFlush = true };
+            Console.Write("Waiting for connection...");
+            TcpClient client = listener.AcceptTcpClient();
+            
+            Console.WriteLine("Connection accepted.");
+            NetworkStream networkStream = client.GetStream();
+            StreamReader reader = new StreamReader(networkStream);
+            StreamWriter writer = new StreamWriter(networkStream) { AutoFlush = true };
 
+            string goodbyeMsg = "Thank you, goodbye.";
+            bool done = false;
 
-                    try 
+            while (!done)
+            {
+                try 
+                {
+                    string clientInput = reader.ReadLine();
+                    Console.WriteLine("Server reading from client: {0}", clientInput);
+                    if (clientInput == "y")
                     {
-                        string clientInput = reader.ReadLine();
-                        Console.WriteLine("Server reading from client: {0}", clientInput);
-                        if (clientInput == "y")
-                        {
-                            writer.WriteLine("This would continue play.");
-                        }
-                        else
-                        {
-                            writer.WriteLine("This would end play");
-                        }
-                        writer.WriteLine("Test");
-                        writer.WriteLine("Thank you, goodbye");
-                        
-                    } catch (Exception e) {
-                        Console.WriteLine(e.ToString());
-                    } 
+                        writer.WriteLine("This would continue play.");
+                    }
+                    else if (clientInput == "n")
+                    {
+                        writer.WriteLine("This would end play");
+                        writer.WriteLine(goodbyeMsg);
+                        done = true;
+                    }
+                    else
+                    {
+                        writer.WriteLine("Invalid entry.");
+                    }                    
+                    
+                } catch (Exception e) 
+                {
+                    Console.WriteLine(e.ToString());
+                } 
+            }
+                
 
 
                 networkStream.Close();
