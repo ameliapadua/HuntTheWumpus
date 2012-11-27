@@ -34,7 +34,7 @@ namespace HuntTheWumpus.ClientServerPractice
             StreamReader reader = new StreamReader(networkStream);
             StreamWriter writer = new StreamWriter(networkStream) { AutoFlush = true };
 
-            string goodbyeMsg = "Thank you, goodbye.";
+            string goodbyeMsg = "This would end play. Thank you, goodbye.";
             bool done = false;
 
             while (!done)
@@ -49,7 +49,6 @@ namespace HuntTheWumpus.ClientServerPractice
                     }
                     else if (clientInput == "n")
                     {
-                        writer.WriteLine("This would end play");
                         writer.WriteLine(goodbyeMsg);
                         done = true;
                     }
@@ -58,9 +57,9 @@ namespace HuntTheWumpus.ClientServerPractice
                         writer.WriteLine("Invalid entry.");
                     }                    
                     
-                } catch (Exception e) 
+                } catch (Exception exception) 
                 {
-                    Console.WriteLine(e.ToString());
+                    Console.WriteLine(exception.ToString());
                 } 
             }
                 

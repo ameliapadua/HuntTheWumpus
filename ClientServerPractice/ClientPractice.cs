@@ -23,7 +23,7 @@ namespace HuntTheWumpus.ClientServerPractice
     		{
     			bool done = false;
     			string clientInput;
-    			string goodbyeMsg = "This would end play";
+                string goodbyeMsg = "This would end play. Thank you, goodbye.";
     			string serverReadLine;
 
     			TcpClient client = new TcpClient(ipString, portNum);
@@ -42,6 +42,7 @@ namespace HuntTheWumpus.ClientServerPractice
 
                         serverReadLine = reader.ReadLine();
                         Console.WriteLine("Msg from server: {0}", serverReadLine);
+                        
                         
                         if (serverReadLine == goodbyeMsg)
                         {
