@@ -27,6 +27,9 @@ namespace HuntTheWumpus
 
 			//Player initially starts in cave 1.
 			EnterRoom(player1, playerRoomNumber, roomMap);
+			
+			//Player is prompted when a terrorist or hostage is close
+			ProximityPrompt(adjacentRooms, terroristRoomNumber, hostageRoomNumber);'
 
 			//Player is prompted for a next action.
 			ChooseNextAction(player1, roomMap);
@@ -208,6 +211,24 @@ namespace HuntTheWumpus
 				}
 			}
 			
+		}
+	
+		public static void ProximityPrompt(int[] adjacentRooms, int terroristRoomNumber, int hostageRoomNumber)
+			foreach(int element in adjacentRooms)
+			{
+	
+				if(terroristRoomNumber = adjacentRooms[element])//dont know if this is proper syntax
+					{
+					Console.WriteLine("Danger Close");
+					}
+			}
+	
+			foreach(int element in adjacentRooms)
+			{
+				if(hostageRoomNumber = adjacentrooms[element])
+					{
+					Console.WriteLine("I hear a hostage!!!");
+					}
 		}
 
 	}
