@@ -29,7 +29,7 @@ namespace HuntTheWumpus
 			EnterRoom(player1, playerRoomNumber, roomMap);
 			
 			//Player is prompted when a terrorist or hostage is close
-			ProximityPrompt(adjacentRooms, terroristRoomNumber, hostageRoomNumber);'
+			ProximityPrompt(adjacentRooms, terroristRoomNumber, hostageRoomNumber);
 
 			//Player is prompted for a next action.
 			ChooseNextAction(player1, roomMap);
