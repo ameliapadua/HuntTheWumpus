@@ -17,7 +17,7 @@ namespace HuntTheWumpus
 			//Creating a player and a wumpus.
 			Player player1 = new Player();
 			Wumpus wumpus = new Wumpus();
-			
+
 			//Creating a random cave to start at
 			//Player starts from any cave from 1 - 5 (outermost caves)
 			Random r = new Random();
@@ -27,73 +27,76 @@ namespace HuntTheWumpus
 
 			//Player initially starts in cave 1.
 			EnterRoom(player1, playerRoomNumber, roomMap);
-			
-			//set adjacentRoom array (im unsure about the syntax of setting the new array to the returned value)
-			int[] adjacentRooms = new int[getAdjacentCaveArray(playerRoomNumber)];
-			
-			
-			//Player is prompted when a terrorist or hostage is close
-			ProximityPrompt(adjacentRooms, terroristRoomNumber, hostageRoomNumber);
 
 			//Player is prompted for a next action.
 			ChooseNextAction(player1, roomMap);
 
 		}
 
-		public static getAdjacentCaveArray(int caveNumber)
+		public static Dictionary<int, int[]> CreateRoomMap()
 		{
-			int[] adjacentCave;
-			adjacentCave = new int[4];
+			Dictionary<int, int[]> roomMap = new Dictionary<int, int[]>();
 
-			
-			//I have to do these individually since i cant think of a function which could identify all of the adjacent points.
-			if(caveNumber = 1)
-			{adjacentCave = {1, 2, 8, 5};}
-			if(caveNumber = 2)
-			{adjacentCave = {2, 3, 1, 10};}
-			if(caveNumber = 3)
-			{adjacentCave = {3, 4, 2, 12};}
-			if(caveNumber = 4)
-			{ adjacentCave = {4, 3, 14, 5};}
-			if(caveNumber = 5)
-			{adjacentCave = {5, 1, 6, 4};}
-			if(caveNumber = 6)
-			{adjacentCave = {6, 7, 15, 6};}
-			if(caveNumber = 7)
-			{adjacentCave = {7, 17, 8, 6};}
-			if(caveNumber = 8)
-			{adjacentCave = {8, 1, 9, 7};}
-			if(caveNumber = 9)
-			{adjacentCave = {9, 10, 8, 18};}
-			if(caveNumber = 10)
-			{adjacentCave = {10, 2, 11, 9};}
+			int[] Room1 = {2, 5, 3};
+			roomMap.Add(1, Room1);
 
-			if(caveNumber = 11)
-			{adjacentCave = {11, 10, 12, 19};}
-			if(caveNumber = 12)
-			{adjacentCave = {12, 13, 3, 11};}
-			if(caveNumber = 13)
-			{adjacentCave = {13, 14, 12, 20};}
-			if(caveNumber = 14)
-			{adjacentCave = {14, 4, 15, 13};}
-			if(caveNumber = 15)
-			{adjacentCave = {15, 16, 14, 6};}
-			if(caveNumber = 16)
-			{adjacentCave = {16, 17, 15, 20};}
-			if(caveNumber = 17)
-			{adjacentCave = {17, 18, 16, 7};}
-			if(caveNumber = 18)
-			{adjacentCave = {18, 19, 17, 9};}
-			if(caveNumber = 19)
-			{adjacentCave = {19, 20, 18, 11};}
-			if(caveNumber = 20)
-			{adjacentCave = {20, 19, 13, 16};}
+			int[] Room2 = {1, 10, 3};
+			roomMap.Add(2, Room2);
 
-			return adjacentCave;
-			
-			
+			int[] Room3 = {2, 4, 12};
+			roomMap.Add(3, Room3);
 
+			int[] Room4 = {3, 5, 14};
+			roomMap.Add(4, Room4);
+
+			int[] Room5 = {1, 10, 3};
+			roomMap.Add(5, Room5);
+
+			int[] Room6 = {5, 7, 15};
+			roomMap.Add(6, Room6);
+
+			int[] Room7 = {6, 8, 17};
+			roomMap.Add(7, Room7);
+
+			int[] Room8 = {1, 7, 9};
+			roomMap.Add(8, Room8);
+
+			int[] Room9 = {8, 10, 18};
+			roomMap.Add(9, Room9);
+
+			int[] Room10 = {2, 9, 11};
+			roomMap.Add(10, Room10);
+
+			int[] Room12 = {3, 11, 13};
+			roomMap.Add(12, Room12);
+
+			int[] Room13 = {12, 14, 20};
+			roomMap.Add(13, Room13);
+
+			int[] Room14 = {4, 13, 15};
+			roomMap.Add(14, Room14);
+
+			int[] Room15 = {6, 14, 16};
+			roomMap.Add(15, Room15);
+
+			int[] Room16 = {15, 17, 20};
+			roomMap.Add(16, Room16);
+
+			int[] Room17 = {7, 16, 18};
+			roomMap.Add(17, Room17);
+
+			int[] Room18 = {9, 17, 19};
+			roomMap.Add(18, Room18);
+
+			int[] Room19 = {11, 18, 20};
+			roomMap.Add(19, Room19);
+
+			int[] Room20 = {13, 16, 19};
+			roomMap.Add(20, Room20);
+
+			return roomMap;
 		}
+
 		//When a player enters a cave, which cave to move to is needed. The player is moved to that cave
 		//and the caves the player can move to are printed. Also the available arrows are printed.
 		public static void EnterRoom(Player player, int roomNumber, Dictionary<int, int[]> roomMap)
@@ -144,7 +147,7 @@ namespace HuntTheWumpus
 							}
 						}
 					}
-					
+
 				}
 				//If player does not choose shoot or move, there is no action and they 
 				//will be prompted again.
@@ -163,25 +166,7 @@ namespace HuntTheWumpus
 					Console.WriteLine("Invalid entry");
 				}
 			}
-			
-		}
-	
-		public static void ProximityPrompt(int[] adjacentRooms, int terroristRoomNumber, int hostageRoomNumber)
-			foreach(int element in adjacentRooms)
-			{
-	
-				if(terroristRoomNumber = adjacentRooms[element])//dont know if this is proper syntax
-					{
-					Console.WriteLine("Danger Close");
-					}
-			}
-	
-			foreach(int element in adjacentRooms)
-			{
-				if(hostageRoomNumber = adjacentrooms[element])
-					{
-					Console.WriteLine("I hear a hostage!!!");
-					}
+
 		}
 
 	}
