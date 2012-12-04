@@ -40,9 +40,11 @@ namespace HuntTheWumpus
 
 		}
 
-		public void getAdjacentCaveArray(int caveNumber)
+		public static getAdjacentCaveArray(int caveNumber)
 		{
-			int[] adjacentCave = new int[4];
+			int[] adjacentCave;
+			adjacentCave = new int[4];
+
 			
 			//I have to do these individually since i cant think of a function which could identify all of the adjacent points.
 			if(caveNumber = 1)
@@ -50,7 +52,7 @@ namespace HuntTheWumpus
 			if(caveNumber = 2)
 			{adjacentCave = {2, 3, 1, 10};}
 			if(caveNumber = 3)
-			{adjacentCave = [4] {3, 4, 2, 12};}
+			{adjacentCave = {3, 4, 2, 12};}
 			if(caveNumber = 4)
 			{ adjacentCave = {4, 3, 14, 5};}
 			if(caveNumber = 5)
