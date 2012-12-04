@@ -28,6 +28,10 @@ namespace HuntTheWumpus
 			//Player initially starts in cave 1.
 			EnterRoom(player1, playerRoomNumber, roomMap);
 			
+			//set adjacentRoom array (im unsure about the syntax of setting the new array to the returned value)
+			int[] adjacentRooms = new int[getAdjacentCaveArray(playerRoomNumber)];
+			
+			
 			//Player is prompted when a terrorist or hostage is close
 			ProximityPrompt(adjacentRooms, terroristRoomNumber, hostageRoomNumber);
 
@@ -36,111 +40,58 @@ namespace HuntTheWumpus
 
 		}
 
-		public static Dictionary<int, int[]> CreateRoomMap()
+		public void getAdjacentCaveArray(int caveNumber)
 		{
-			Dictionary<int, int[]> roomMap = new Dictionary<int, int[]>();
+			int[] adjacentCave = new int[4];
+			
+			//I have to do these individually since i cant think of a function which could identify all of the adjacent points.
+			if(caveNumber = 1)
+			{adjacentCave = {1, 2, 8, 5};}
+			if(caveNumber = 2)
+			{adjacentCave = {2, 3, 1, 10};}
+			if(caveNumber = 3)
+			{adjacentCave = [4] {3, 4, 2, 12};}
+			if(caveNumber = 4)
+			{ adjacentCave = {4, 3, 14, 5};}
+			if(caveNumber = 5)
+			{adjacentCave = {5, 1, 6, 4};}
+			if(caveNumber = 6)
+			{adjacentCave = {6, 7, 15, 6};}
+			if(caveNumber = 7)
+			{adjacentCave = {7, 17, 8, 6};}
+			if(caveNumber = 8)
+			{adjacentCave = {8, 1, 9, 7};}
+			if(caveNumber = 9)
+			{adjacentCave = {9, 10, 8, 18};}
+			if(caveNumber = 10)
+			{adjacentCave = {10, 2, 11, 9};}
 
-			int[] adjacentRooms = {2, 8, 5};
-			roomMap.Add(1, adjacentRooms);
+			if(caveNumber = 11)
+			{adjacentCave = {11, 10, 12, 19};}
+			if(caveNumber = 12)
+			{adjacentCave = {12, 13, 3, 11};}
+			if(caveNumber = 13)
+			{adjacentCave = {13, 14, 12, 20};}
+			if(caveNumber = 14)
+			{adjacentCave = {14, 4, 15, 13};}
+			if(caveNumber = 15)
+			{adjacentCave = {15, 16, 14, 6};}
+			if(caveNumber = 16)
+			{adjacentCave = {16, 17, 15, 20};}
+			if(caveNumber = 17)
+			{adjacentCave = {17, 18, 16, 7};}
+			if(caveNumber = 18)
+			{adjacentCave = {18, 19, 17, 9};}
+			if(caveNumber = 19)
+			{adjacentCave = {19, 20, 18, 11};}
+			if(caveNumber = 20)
+			{adjacentCave = {20, 19, 13, 16};}
 
-			adjacentRooms[0] = 3;
-			adjacentRooms[1] = 1;
-			adjacentRooms[2] = 10;
-			roomMap.Add(2, adjacentRooms);
+			return adjacentCave;
+			
+			
 
-			adjacentRooms[0] = 4;
-			adjacentRooms[1] = 2;
-			adjacentRooms[2] = 12;
-			roomMap.Add(3, adjacentRooms);
-
-			adjacentRooms[0] = 3;
-			adjacentRooms[1] = 14;
-			adjacentRooms[2] = 5;
-			roomMap.Add(4, adjacentRooms);
-
-			adjacentRooms[0] = 1;
-			adjacentRooms[1] = 6;
-			adjacentRooms[2] = 4;
-			roomMap.Add(5, adjacentRooms);
-
-			adjacentRooms[0] = 7;
-			adjacentRooms[1] = 15;
-			adjacentRooms[2] = 6;
-			roomMap.Add(6, adjacentRooms);
-
-			adjacentRooms[0] = 17;
-			adjacentRooms[1] = 8;
-			adjacentRooms[2] = 6;
-			roomMap.Add(7, adjacentRooms);
-
-			adjacentRooms[0] = 1;
-			adjacentRooms[1] = 9;
-			adjacentRooms[2] = 7;
-			roomMap.Add(8, adjacentRooms);
-
-			adjacentRooms[0] = 10;
-			adjacentRooms[1] = 8;
-			adjacentRooms[2] = 18;
-			roomMap.Add(9, adjacentRooms);
-
-			adjacentRooms[0] = 2;
-			adjacentRooms[1] = 11;
-			adjacentRooms[2] = 9;
-			roomMap.Add(10, adjacentRooms);
-
-			adjacentRooms[0] = 10;
-			adjacentRooms[1] = 12;
-			adjacentRooms[2] = 19;
-			roomMap.Add(11, adjacentRooms);
-
-			adjacentRooms[0] = 13;
-			adjacentRooms[1] = 3;
-			adjacentRooms[2] = 11;
-			roomMap.Add(12, adjacentRooms);
-
-			adjacentRooms[0] = 14;
-			adjacentRooms[1] = 12;
-			adjacentRooms[2] = 20;
-			roomMap.Add(13, adjacentRooms);
-
-			adjacentRooms[0] = 4;
-			adjacentRooms[1] = 15;
-			adjacentRooms[2] = 13;
-			roomMap.Add(14, adjacentRooms);
-
-			adjacentRooms[0] = 16;
-			adjacentRooms[1] = 14;
-			adjacentRooms[2] = 6;
-			roomMap.Add(15, adjacentRooms);
-
-			adjacentRooms[0] = 17;
-			adjacentRooms[1] = 15;
-			adjacentRooms[2] = 20;
-			roomMap.Add(16, adjacentRooms);
-
-			adjacentRooms[0] = 18;
-			adjacentRooms[1] = 16;
-			adjacentRooms[2] = 7;
-			roomMap.Add(17, adjacentRooms);
-
-			adjacentRooms[0] = 19;
-			adjacentRooms[1] = 17;
-			adjacentRooms[2] = 9;
-			roomMap.Add(18, adjacentRooms);
-
-			adjacentRooms[0] = 20;
-			adjacentRooms[1] = 18;
-			adjacentRooms[2] = 11;
-			roomMap.Add(19, adjacentRooms);
-
-			adjacentRooms[0] = 19;
-			adjacentRooms[1] = 13;
-			adjacentRooms[2] = 16;
-			roomMap.Add(20, adjacentRooms);
-
-			return roomMap;
 		}
-
 		//When a player enters a cave, which cave to move to is needed. The player is moved to that cave
 		//and the caves the player can move to are printed. Also the available arrows are printed.
 		public static void EnterRoom(Player player, int roomNumber, Dictionary<int, int[]> roomMap)
