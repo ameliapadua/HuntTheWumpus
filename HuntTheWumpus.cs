@@ -171,3 +171,15 @@ namespace HuntTheWumpus
 
 	}
 }
+
+
+
+
+
+
+
+// Fix sensory functions to utilize dictionaries
+//associate terrorist and hostage room numbers with combat actions
+//is player alive test
+//are npc's alive
+//are npc's blinded test
