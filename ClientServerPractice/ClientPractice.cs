@@ -9,7 +9,7 @@ namespace HuntTheWumpus.ClientServerPractice
 	public class TcpTimeClient 
 	{
     	private const int portNum = 3000;
-    	private string ipString = "127.0.0.1";
+    	private string ipString = "10.36.12.40";
 
     	public static void Main(String[] args) 
     	{
