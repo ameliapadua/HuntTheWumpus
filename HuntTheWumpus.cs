@@ -1,32 +1,43 @@
 using System;
 using System.Collections.Generic;
 
-namespace HuntTheWumpus
+namespace HuntTheTerrorist
 {
-	class HuntTheWumpus
+	class HuntTheTerrorist
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Time to hunt the Wumpus!");
+			Console.WriteLine("Time to kill some terrorists!");
 
-			PlayHuntTheWumpus();
+			PlayHuntTheTerrorist();
+
 		}
 
-		public static void PlayHuntTheWumpus()
+		public static void PlayHuntTheTerrorist()
 		{
 			//Creating a player and a wumpus.
 			Player player1 = new Player();
-			Wumpus wumpus = new Wumpus();
+			Terrorist terrorist1 = new Terrorist();
+			Hostage hostage = new Hostage();
 
 			//Creating a random cave to start at
 			//Player starts from any cave from 1 - 5 (outermost caves)
-			Random r = new Random();
-			int playerRoomNumber = r.Next(1,6);	
+			Random p = new Random();
+			int playerRoomNumber = p.Next(1,6);	
+
+			Random a = new Random();
+			int terroristRoomNumber = a.Next(6,9);
+
+			int hostageRoomNumber = terroristRoomNumber;
+
+
+			//to get wumusroomnumnber, follow the syntax below but for the wumpus
 
 			Dictionary<int, int[]> roomMap = CreateRoomMap();
 
 			//Player initially starts in cave 1.
 			EnterRoom(player1, playerRoomNumber, roomMap);
+			EnterRoom(terrorist1, terroristRoomNumber, roomMap);
 
 			//Player is prompted for a next action.
 			ChooseNextAction(player1, roomMap);
@@ -109,6 +120,18 @@ namespace HuntTheWumpus
 			//Printing where the player can move to next and how many arrows they have.
 			Console.WriteLine("Tunnels lead to rooms {0}, {1}, and {2}", adjacentRooms[0], adjacentRooms[1], adjacentRooms[2]);
 			Console.WriteLine("You have {0} bullets, {1} flashbangs, and {2} grenades.", player.GetPlayerBullets(), player.GetPlayerFlashbangs(), player.GetPlayerGrenades());
+
+		}
+
+		public static void EnterRoom(Terrorist terrorist, int roomNumber, Dictionary<int, int[]> roomMap)
+		{
+			terrorist.terroristRoomNumber = roomNumber;
+			Console.WriteLine("You have now entered Room {0}.", terrorist.GetTerroristRoomNumber());
+
+			int[] adjacentRooms = roomMap[roomNumber];
+
+			//Printing where the player can move to next and how many arrows they have.
+
 		}
 
 		public static void ChooseNextAction(Player player1, Dictionary<int, int[]> roomMap)
@@ -171,8 +194,6 @@ namespace HuntTheWumpus
 
 	}
 }
-
-
 
 
 
