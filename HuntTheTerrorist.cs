@@ -22,9 +22,6 @@ namespace HuntTheTerrorist
 			Player player1 = DropPlayerinRoom(roomMap);
 			Terrorist[] terrorists = DropTerroristsInRooms();		
 			Hostage hostage = DropHostageInRoom(terrorists);			
-
-			//Player enters 
-			//EnterRoom(player1, playerRoomNumber, roomMap);
 			
 			//Player is prompted for a next action.
 			ChooseAction(player1, terrorists, hostage, roomMap);
@@ -102,8 +99,9 @@ namespace HuntTheTerrorist
 
 			//Player starts from any room from 1 - 5 (outermost rooms)
 			Random p = new Random();
-			player.playerRoomNumber = p.Next(1,6);	
+			player.playerRoomNumber = p.Next(1,6);
 
+			Console.WriteLine("You have been dropped into Room {0}.", player.playerRoomNumber);
 			AnnounceAdjacentRooms(player.playerRoomNumber, roomMap);
 
 			return player;
@@ -137,18 +135,14 @@ namespace HuntTheTerrorist
 			hostage.hostageRoomNumber = terrorists[hostageRoomOptionsGen.Next(1,5)].terroristRoomNumber;
 
 			return hostage;
-		}
-
-		//When a player enters a cave, which cave to move to is needed. The player is moved to that cave
-		//and the caves the player can move to are printed. Also the available arrows are printed.
-		
+		}		
 
 		public static void AnnounceAdjacentRooms(int roomNumber, Dictionary<int, int[]> roomMap)
 		{
 			int[] adjacentRooms = roomMap[roomNumber];
 
 			//Printing where the player can move to next and how many arrows they have.
-			Console.WriteLine("Tunnels lead to rooms {0}, {1}, and {2}", adjacentRooms[0], adjacentRooms[1], adjacentRooms[2]);
+			Console.WriteLine("Tunnels lead to rooms {0}, {1}, and {2}.\n", adjacentRooms[0], adjacentRooms[1], adjacentRooms[2]);
 		}
 
 		public static void ChooseAction(Player player1, Terrorist[] terrorists, Hostage hostage, Dictionary<int, int[]> roomMap)
@@ -158,7 +152,7 @@ namespace HuntTheTerrorist
 			while (player1.IsPlayerAlive() == true)
 			{
 				//Ask the player what they want to do. 
-				Console.WriteLine("Shoot (S), throw a grenade (G), throw a flashbang (F), or move (M): ");
+				Console.WriteLine("Shoot (S), throw a grenade (G), throw a flashbang (F), move (M), or quit (Q): ");
 				string input = Console.ReadLine();
 				string playerChoice = input.Trim().ToUpper();
 
@@ -167,6 +161,16 @@ namespace HuntTheTerrorist
 				{
 					player1.ShootBullets();
 					Console.WriteLine("\nYou have {0} bullets.", player1.GetPlayerBullets());
+				}
+				else if (playerChoice == "G")
+				{
+					player1.ThrowGrenades();
+					Console.WriteLine("You have {0} grenades.", player1.GetPlayerGrenades());
+				}
+				else if (playerChoice == "F")
+				{
+					player1.ThrowFlashbangs();
+					Console.WriteLine("You have {0} flashbangs.", player1.GetPlayerFlashbangs());
 				}
 				//If player wants to move, they are prompted for which room and are moved there.
 				else if (playerChoice == "M")
@@ -183,24 +187,18 @@ namespace HuntTheTerrorist
 							if (roomNumber == adjacentRooms[i])
 							{
 								roomExists = true;
-								EnterRoom(player1, roomNumber, roomMap);
-								CheckAdjacentRooms(player1, terrorists, hostage, roomMap);
+								player1.alive = EnterRoom(player1, roomNumber, terrorists, hostage, roomMap);
+								if (player1.alive == true)
+								{
+									CheckAdjacentRooms(player1, terrorists, hostage, roomMap);
+								}
 							}
 						}
 					}
-
 				}
-				//If player does not choose shoot or move, there is no action and they 
-				//will be prompted again.
-				else if (playerChoice == "G")
+				else if (playerChoice == "Q")
 				{
-					player1.ThrowGrenades();
-					Console.WriteLine("You have {0} grenades.", player1.GetPlayerGrenades());
-				}
-				else if (playerChoice == "F")
-				{
-					player1.ThrowFlashbangs();
-					Console.WriteLine("You have {0} flashbangs.", player1.GetPlayerFlashbangs());
+					player1.alive = false;
 				}
 				else
 				{
@@ -210,15 +208,33 @@ namespace HuntTheTerrorist
 
 		}
 
-		public static void EnterRoom(Player player, int roomNumber, Dictionary<int, int[]> roomMap)
+		public static bool EnterRoom(Player player, int roomNumber, Terrorist[] terrorists, Hostage hostage, Dictionary<int, int[]> roomMap)
 		{
 			player.playerRoomNumber = roomNumber;
-			Console.WriteLine("\nYou have now entered Room {0}.", player.GetPlayerRoomNumber());
+			Console.WriteLine("--------------------------------------------------------------\nYou have now entered Room {0}.", player.GetPlayerRoomNumber());
 
-			AnnounceAdjacentRooms(player.playerRoomNumber, roomMap);
+			player.alive = CheckForTerrorists(player, terrorists);
 
-			Console.WriteLine("\nYou have {0} bullets, {1} flashbangs, and {2} grenades.\n", player.GetPlayerBullets(), player.GetPlayerFlashbangs(), player.GetPlayerGrenades());
+			if (player.alive == false)
+			{
+				return player.alive;
+			}
+			else
+			{
+				player.alive = CheckForHostage(player, hostage);
 
+				if (player.alive == false)
+				{
+					return player.alive;
+				}
+				else
+				{
+					AnnounceAdjacentRooms(player.playerRoomNumber, roomMap);
+					Console.WriteLine("You have {0} bullets, {1} flashbangs, and {2} grenades.\n", player.GetPlayerBullets(), player.GetPlayerFlashbangs(), player.GetPlayerGrenades());
+				}
+			}
+
+			return player.alive;
 		}
 
 		public static void CheckAdjacentRooms(Player player, Terrorist[] terrorists, Hostage hostage, Dictionary<int, int[]> roomMap)
@@ -240,8 +256,31 @@ namespace HuntTheTerrorist
 					Console.WriteLine("Hostage in an adjacent room!");
 				}
 			}
+		}
 
+		public static bool CheckForTerrorists(Player player, Terrorist[] terrorists)
+		{
+			for (int i=0; i<terrorists.Length; i++)
+			{
+				if (terrorists[i].terroristRoomNumber == player.playerRoomNumber)
+				{
+					Console.WriteLine("Killed by a terrorist!\nBetter luck next time!");
+					player.alive = false;
+				}
+			}
 
+			return player.alive;
+		}
+
+		public static bool CheckForHostage(Player player, Hostage hostage)
+		{
+			if (player.playerRoomNumber == hostage.hostageRoomNumber)
+			{
+				Console.WriteLine("You found the hostage!\nCongratulations, you win!!");
+				player.alive = false;
+			}
+
+			return player.alive;
 		}
 
 	}
