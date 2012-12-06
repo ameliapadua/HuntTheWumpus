@@ -126,7 +126,8 @@ namespace HuntTheTerrorist
 		public static void EnterRoom(Terrorist terrorist, int roomNumber, Dictionary<int, int[]> roomMap)
 		{
 			terrorist.terroristRoomNumber = roomNumber;
-			Console.WriteLine("You have now entered Room {0}.", terrorist.GetTerroristRoomNumber());
+			//write the code below to see if the randomized room number for the terrorist really works
+			//Console.WriteLine("You have now entered Room {0}.", terrorist.GetTerroristRoomNumber());
 
 			int[] adjacentRooms = roomMap[roomNumber];
 
