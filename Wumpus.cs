@@ -1,30 +1,46 @@
 using System;
 
-namespace HuntTheWumpus
+namespace HuntTheTerrorist
 {
-	class Wumpus
+	class Terrorist
 	{
 		public bool alive;
-		public int wumpusRoomNumber;
+		public bool flashbanged;
+		public int terroristRoomNumber;
 
-		public Wumpus()
+		public Terrorist()
 		{
 			this.alive = true;
-			this.wumpusRoomNumber = 5;
+			this.flashbanged = false;
 		}
 
-		public int GetWumpusRoomNumber()
+		public int GetTerroristRoomNumber()
 		{
-			return wumpusRoomNumber;
+			return terroristRoomNumber;
 		}
 
-		public bool IsWumpusAlive()
+		public bool IsTerroristAlive()
 		{
 			return alive;
 		}
 
-		//If the wumpus is shot, it dies.
+		public bool IsTerroristFlashbanged()
+		{
+			return flashbanged;
+		}
+
+		//If the terrorist is shot, it dies.
 		public void ShotWithBullets()
+		{
+			this.alive = false;
+		}
+
+		public void FlashBanged()
+		{
+			this.flashbanged = true;
+		}
+
+		public void KilledByGrenade()
 		{
 			this.alive = false;
 		}
