@@ -4,7 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.IO;
 
-namespace HuntTheWumpus.ClientServerPractice
+namespace HuntTheWumpus
 {
 	public class TcpTimeClient 
 	{
@@ -22,7 +22,7 @@ namespace HuntTheWumpus.ClientServerPractice
     		try 
     		{
     			bool done = false;
-    			string clientInput;
+    			string clientInput, gameResponse;
                 string goodbyeMsg = "This would end play. Thank you, goodbye.";
     			string serverReadLine;
 
@@ -35,19 +35,21 @@ namespace HuntTheWumpus.ClientServerPractice
     			while (!done)
     			{
                     try
-                    {
-                        Console.WriteLine("Enter y/n: ");
-                        clientInput = Console.ReadLine();           
-                        writer.WriteLine(clientInput);
+                    {                        
+                        gameResponse = reader.ReadLine();
+                        Console.WriteLine(gameResponse);                                                   
 
-                        serverReadLine = reader.ReadLine();
-                        Console.WriteLine("Msg from server: {0}", serverReadLine);
-                        
-                        
-                        if (serverReadLine == goodbyeMsg)
+                        if (gameResponse.Contains(":") == true)
+                        {
+                            clientInput = Console.ReadLine();
+                            writer.WriteLine(clientInput);
+                        }
+                        if (gameResponse == "Q")
                         {
                             done = true;
-                        } 
+                        }
+
+                        
                     } catch (Exception exception)
                     {
                         Console.WriteLine(exception.ToString());
