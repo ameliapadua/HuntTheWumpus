@@ -1,8 +1,8 @@
 using System;
 
-namespace HuntTheWumpus
+namespace HuntTheTerrorist
 {
-	class Room
+	public class Room
 	{
 		public bool containsWumpus;
 		public bool containsPlayer;

@@ -1,8 +1,8 @@
 using System;
 
-namespace HuntTheWumpus
+namespace HuntTheTerrorist
 {
-	class Player
+	public class Player
 	{
 		public int bullets;
 		public int grenades;
