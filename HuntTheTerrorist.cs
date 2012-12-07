@@ -147,36 +147,97 @@ namespace HuntTheTerrorist
 
 		public static void ChooseAction(Player player1, Terrorist[] terrorists, Hostage hostage, Dictionary<int, int[]> roomMap)
 		{
+
 			//While the player has not been killed by the terrorist, 
 			//the player is prompted for another action.
-			while (player1.IsPlayerAlive() == true)
+			while (player1.IsPlayerAlive() == true && hostage.IsHostageAlive() == true)
 			{
+				//Get adjacent rooms.
+				int[] adjacentRooms = roomMap[player1.playerRoomNumber];
+
 				//Ask the player what they want to do. 
 				Console.WriteLine("Shoot (S), throw a grenade (G), throw a flashbang (F), move (M), or quit (Q): ");
 				string input = Console.ReadLine();
 				string playerChoice = input.Trim().ToUpper();
 
-				//If player wants to shoot an arrow, they lose an arrow.
+				//If player wants to shoot, they lose a bullet.
 				if (playerChoice == "S")
 				{
+					//Player shoots.
 					player1.ShootBullets();
-					Console.WriteLine("\nYou have {0} bullets.", player1.GetPlayerBullets());
+
+					//Check to see if any of the terrorists are in the room the player is in.
+					for (int i=0; i<terrorists.Length; i++)
+					{
+						//If there is a terrorist in the room, the terrorist gets killed.
+						if (terrorists[i].terroristRoomNumber == player1.playerRoomNumber)
+						{
+							terrorists[i].alive = false;
+							Console.WriteLine("\nTerrorist terminated.");
+						}
+						//Otherwise the player just loses a bullet.
+						else
+						{
+							Console.WriteLine("\nNo terrorists in here. Wasted bullet...");
+						}
+					}
+
+					//Lets the player know how many bullets they have left.
+					Console.WriteLine("You have {0} bullets.", player1.GetPlayerBullets());
 				}
 				else if (playerChoice == "G")
 				{
+					//Player has to choose which room to throw a grenade into.
+					Console.WriteLine("Which room do you want to throw the grenade into?");
+					int grenadeIntoRoomNum = int.Parse(Console.ReadLine());
+
+					//Player throws grenade.
 					player1.ThrowGrenades();
+
+					//If a hostage is in the room the player throws a grenade into, game is over.
+					if (hostage.hostageRoomNumber == grenadeIntoRoomNum)
+					{
+						Console.WriteLine("Oh no! You killed the hostage.\nGAME OVER");
+						hostage.alive = false;
+						break;
+					}
+
+					//If a terrorist is in the room the player throws a grenade into, it dies.
+					for (int i=0; i<terrorists.Length; i++)
+					{
+						if (terrorists[i].terroristRoomNumber == grenadeIntoRoomNum)
+						{
+							terrorists[i].alive = false;
+							Console.WriteLine("\nTerrorist terminated.");
+						}
+					}
+
+					//Lets the player know how many grenades they have left after throwing one. 
 					Console.WriteLine("You have {0} grenades.", player1.GetPlayerGrenades());
 				}
 				else if (playerChoice == "F")
 				{
+					//Player has to choose which room to throw a flashbang into.
+					Console.WriteLine("Which room do you want to throw the flashbang into?");
+					int flashbangIntoRoomNum = int.Parse(Console.ReadLine());
+
+					//Player throws flashbang.
 					player1.ThrowFlashbangs();
+
+					for (int i=0; i<terrorists.Length; i++)
+					{
+						if (terrorists[i].terroristRoomNumber == flashbangIntoRoomNum)
+						{
+							terrorists[i].flashbanged = true;
+							Console.WriteLine("You blinded a terrorist. Move now before they regain their sight.");
+						}
+					}
 					Console.WriteLine("You have {0} flashbangs.", player1.GetPlayerFlashbangs());
 				}
 				//If player wants to move, they are prompted for which room and are moved there.
 				else if (playerChoice == "M")
 				{
 					bool roomExists = false;
-					int[] adjacentRooms = roomMap[player1.playerRoomNumber];
 					while (!roomExists)
 					{
 						Console.WriteLine("Which room would you like to move to?");
@@ -264,8 +325,11 @@ namespace HuntTheTerrorist
 			{
 				if (terrorists[i].terroristRoomNumber == player.playerRoomNumber)
 				{
-					Console.WriteLine("Killed by a terrorist!\nBetter luck next time!");
-					player.alive = false;
+					if (terrorists[i].flashbanged == false)
+					{
+						Console.WriteLine("Killed by a terrorist!\nBetter luck next time!");
+						player.alive = false;
+					}					
 				}
 			}
 
