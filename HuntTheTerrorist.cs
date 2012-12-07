@@ -170,7 +170,7 @@ namespace HuntTheTerrorist
 				{
 					//Player shoots.
 					player1.ShootBullets();
-					bool killedTerrorist = false;
+					bool isTerroristDead = false;
 
 					//Check to see if any of the terrorists are in the room the player is in.
 					for (int i=0; i<terrorists.Length; i++)
@@ -180,11 +180,11 @@ namespace HuntTheTerrorist
 						{
 							terrorists[i].alive = false;
 							Console.WriteLine("\nTerrorist terminated.");
-							killedTerrorist = true;
+							isTerroristDead = true;
 						}
 					}
 					//Otherwise the player just loses a bullet.
-					if (killedTerrorist == true);
+					if (isTerroristDead == false)
 					{
 						Console.WriteLine("\nNo terrorists in here. Wasted bullet...");
 					}
@@ -227,6 +227,7 @@ namespace HuntTheTerrorist
 					//Player has to choose which room to throw a flashbang into.
 					Console.WriteLine("Which room do you want to throw the flashbang into?");
 					int flashbangIntoRoomNum = int.Parse(Console.ReadLine());
+					bool isTerroristFlashbanged = false;
 
 					//Player throws flashbang.
 					player1.ThrowFlashbangs();
@@ -236,9 +237,16 @@ namespace HuntTheTerrorist
 						if (terrorists[i].terroristRoomNumber == flashbangIntoRoomNum)
 						{
 							terrorists[i].flashbanged = true;
+							isTerroristFlashbanged = true;
 							Console.WriteLine("You blinded a terrorist. Move now before they regain their sight.");
 						}
 					}
+
+					if (isTerroristFlashbanged == false)
+					{
+						Console.WriteLine("No one in that room.");
+					}
+
 					Console.WriteLine("You have {0} flashbangs.", player1.GetPlayerFlashbangs());
 				}
 				//If player wants to move, they are prompted for which room and are moved there.
@@ -247,7 +255,7 @@ namespace HuntTheTerrorist
 					bool roomExists = false;
 					while (!roomExists)
 					{
-						Console.WriteLine("Which room would you like to move to?");
+						Console.Write("Choose room to move to: ");
 						int roomNumber = int.Parse(Console.ReadLine());
 
 						for (int i=0; i<3; i++)
@@ -270,7 +278,7 @@ namespace HuntTheTerrorist
 				}
 				else
 				{
-					Console.WriteLine("Invalid entry");
+					Console.WriteLine("That's not an option.");
 				}
 			}
 
@@ -313,15 +321,15 @@ namespace HuntTheTerrorist
 			{
 				for (int j=0; j<terrorists.Length; j++)
 				{
-					if (adjacentRooms[i] == terrorists[j].terroristRoomNumber)
+					if (adjacentRooms[i] == terrorists[j].terroristRoomNumber && terrorists[j].alive == true)
 					{
-						Console.WriteLine("Terrorist in an adjacent room!");
+						Console.WriteLine("Something doesn't feel right in here...");
 					}
 				}
 
 				if (adjacentRooms[i] == hostage.hostageRoomNumber)
 				{
-					Console.WriteLine("Hostage in an adjacent room!");
+					Console.WriteLine("I think I hear someone shouting in the next room.");
 				}
 			}
 		}
@@ -334,7 +342,7 @@ namespace HuntTheTerrorist
 				{
 					if (terrorists[i].flashbanged == false)
 					{
-						Console.WriteLine("Killed by a terrorist!\nBetter luck next time!");
+						Console.WriteLine("Killed by a terrorist.\nBetter luck next time!");
 						player.alive = false;
 					}					
 				}
