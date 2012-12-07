@@ -19,9 +19,10 @@ namespace HuntTheTerrorist
 			Dictionary<int, int[]> roomMap = CreateRoomMap();
 
 			//Creating a player, set of terrorists, and a hostage.
-			Player player1 = DropPlayerinRoom(roomMap);
 			Terrorist[] terrorists = DropTerroristsInRooms();		
-			Hostage hostage = DropHostageInRoom(terrorists);			
+			Hostage hostage = DropHostageInRoom(terrorists);
+			Player player1 = DropPlayerinRoom(roomMap);
+			CheckAdjacentRooms(player1, terrorists, hostage, roomMap);			
 			
 			//Player is prompted for a next action.
 			ChooseAction(player1, terrorists, hostage, roomMap);
@@ -35,40 +36,43 @@ namespace HuntTheTerrorist
 			int[] Room1 = {2, 5, 3};
 			roomMap.Add(1, Room1);
 
-			int[] Room2 = {1, 10, 3};
+			int[] Room2 = {1, 8, 3};
 			roomMap.Add(2, Room2);
 
-			int[] Room3 = {2, 4, 12};
+			int[] Room3 = {2, 4, 10};
 			roomMap.Add(3, Room3);
 
-			int[] Room4 = {3, 5, 14};
+			int[] Room4 = {3, 5, 12};
 			roomMap.Add(4, Room4);
 
-			int[] Room5 = {1, 10, 3};
+			int[] Room5 = {1, 14, 4};
 			roomMap.Add(5, Room5);
 
-			int[] Room6 = {5, 7, 15};
+			int[] Room6 = {1, 7, 15};
 			roomMap.Add(6, Room6);
 
 			int[] Room7 = {6, 8, 17};
 			roomMap.Add(7, Room7);
 
-			int[] Room8 = {1, 7, 9};
+			int[] Room8 = {2, 7, 9};
 			roomMap.Add(8, Room8);
 
 			int[] Room9 = {8, 10, 18};
 			roomMap.Add(9, Room9);
 
-			int[] Room10 = {2, 9, 11};
+			int[] Room10 = {3, 9, 11};
 			roomMap.Add(10, Room10);
 
-			int[] Room12 = {3, 11, 13};
+			int[] Room11 = {10, 12, 19};
+			roomMap.Add(11, Room11);
+
+			int[] Room12 = {4, 11, 13};
 			roomMap.Add(12, Room12);
 
 			int[] Room13 = {12, 14, 20};
 			roomMap.Add(13, Room13);
 
-			int[] Room14 = {4, 13, 15};
+			int[] Room14 = {5, 13, 15};
 			roomMap.Add(14, Room14);
 
 			int[] Room15 = {6, 14, 16};
@@ -103,6 +107,7 @@ namespace HuntTheTerrorist
 
 			Console.WriteLine("You have been dropped into Room {0}.", player.playerRoomNumber);
 			AnnounceAdjacentRooms(player.playerRoomNumber, roomMap);
+
 
 			return player;
 		}
@@ -165,6 +170,7 @@ namespace HuntTheTerrorist
 				{
 					//Player shoots.
 					player1.ShootBullets();
+					bool killedTerrorist = false;
 
 					//Check to see if any of the terrorists are in the room the player is in.
 					for (int i=0; i<terrorists.Length; i++)
@@ -174,12 +180,13 @@ namespace HuntTheTerrorist
 						{
 							terrorists[i].alive = false;
 							Console.WriteLine("\nTerrorist terminated.");
+							killedTerrorist = true;
 						}
-						//Otherwise the player just loses a bullet.
-						else
-						{
-							Console.WriteLine("\nNo terrorists in here. Wasted bullet...");
-						}
+					}
+					//Otherwise the player just loses a bullet.
+					if (killedTerrorist == true);
+					{
+						Console.WriteLine("\nNo terrorists in here. Wasted bullet...");
 					}
 
 					//Lets the player know how many bullets they have left.
@@ -349,13 +356,3 @@ namespace HuntTheTerrorist
 
 	}
 }
-
-
-
-
-
-// Fix sensory functions to utilize dictionaries
-//associate terrorist and hostage room numbers with combat actions
-//is player alive test
-//are npc's alive
-//are npc's blinded test
