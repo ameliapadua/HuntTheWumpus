@@ -2,7 +2,7 @@ using System;
 
 namespace HuntTheTerrorist
 {
-  class Hostage
+  	public class Hostage
 	{
 		public bool alive;
 		public int hostageRoomNumber;

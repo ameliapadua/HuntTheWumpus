@@ -7,7 +7,7 @@ namespace HuntTheTerrorist
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Time to kill some terrorists!");
+			Console.WriteLine("Rescue the hostage!");
 
 			PlayHuntTheTerrorist();
 
