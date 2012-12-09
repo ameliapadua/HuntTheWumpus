@@ -7,7 +7,17 @@ namespace HuntTheTerrorist
 	{
 		public static void Main(string[] args)
 		{
-			Console.WriteLine("Rescue the hostage!");
+			Console.WriteLine("Welcome to Hunt the Terrorist!");
+			Console.WriteLine("");
+			Console.WriteLine("Your team has discovered a terrorist lair and must rescue the hostages trapped");
+			Console.WriteLine("within! Follow the on-screen directions to move from room to room and attack.");
+			Console.WriteLine("You will be alerted when a terrorist or hostage is in an adjacent room, but it");
+			Console.WriteLine("will be up to you to decide which one! Your team is outfitted with 3 clips of");
+			Console.WriteLine("bullets, 2 flash-bang grenades, and 1 high explosive grenades. Grenades can be");
+			Console.WriteLine("thrown into adjacent rooms, while bullets must be used in the same room and are");
+			Console.WriteLine("only effective after an enemy has been flash-banged. Find and secure the");
+			Console.WriteLine("hostages to win the game. But be careful! If you grenade the hostages they will");
+			Console.WriteLine("die and that’s game over! Good luck!");
 
 			PlayHuntTheTerrorist();
 
